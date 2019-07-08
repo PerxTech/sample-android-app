@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Digi Sample</string>
+    <string name="ok">OK</string>
+    <string name="default_url">https://www.perxtech.com/</string>
+    <string name="base_64_encoded">Base 64 encoded</string>
+    <string name="json">Json</string>
+</resources>

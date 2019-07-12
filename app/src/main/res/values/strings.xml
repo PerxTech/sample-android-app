@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Digi Sample</string>
     <string name="ok">OK</string>
-    <string name="default_url">https://www.perxtech.com/</string>
+    <string name="default_url">https://microsite-digi-minigames.perxtech.io/games</string>
+    <string name="userId">0004</string>
     <string name="base_64_encoded">Base 64 encoded</string>
     <string name="json">Json</string>
+    <string name="url">url</string>
+    <string name="user_id">User Id</string>
+    <string name="campaignId">Campaign Id</string>
+    <string name="campaign">239</string>
 </resources>

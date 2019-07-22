@@ -95,25 +95,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private class MyWebViewClient extends WebViewClient {
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            return handleUrl(view, url) || super.shouldOverrideUrlLoading(view, url);
-//        }
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return handleUrl(view, url) || super.shouldOverrideUrlLoading(view, url);
+        }
 
+        @Override
         public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
             this.handleUrl(view, url);
             super.doUpdateVisitedHistory(view, url, isReload);
         }
 
-//        public void onPageFinished(WebView view, String url) {
-//            this.handleUrl(view, url);
-//            super.onPageFinished(view, url);
-//        }
-//
-//        public void onPageCommitVisible(WebView view, String url) {
-//            this.handleUrl(view, url);
-//            super.onPageCommitVisible(view, url);
-//        }
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            this.handleUrl(view, url);
+            super.onPageFinished(view, url);
+        }
+
+        @Override
+        public void onPageCommitVisible(WebView view, String url) {
+            this.handleUrl(view, url);
+            super.onPageCommitVisible(view, url);
+        }
 
         private boolean handleUrl(WebView view, String url) {
             url = view.getUrl();

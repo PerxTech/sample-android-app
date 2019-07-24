@@ -9,4 +9,8 @@
     <string name="user_id">User Id</string>
     <string name="campaignId">Campaign Id</string>
     <string name="campaign">239</string>
+    <string-array name="idType">
+        <item>Token</item>
+        <item>User Id</item>
+    </string-array>
 </resources>

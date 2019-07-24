@@ -21,6 +21,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int REQUEST_PERMISSION_INTERNET = 1;
     WebView wv = null;
     EditText urlEdit = null;
-    EditText userIdEdit = null;
+    EditText idEdit = null;
     EditText campaignIdEdit = null;
+    Spinner idType = null;
     Button okBtn = null;
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
@@ -54,9 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.wv.setWebViewClient(new MyWebViewClient());
 
         this.urlEdit = this.findViewById(R.id.url);
-        this.userIdEdit = this.findViewById(R.id.userId);
+        this.idEdit = this.findViewById(R.id.id);
         this.campaignIdEdit = this.findViewById(R.id.campaignId);
         this.okBtn = this.findViewById(R.id.okBtn);
+        this.idType = this.findViewById(R.id.idType);
 
         this.okBtn.setOnClickListener(this);
     }
@@ -86,9 +89,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         String url = this.urlEdit.getText().toString();
-        String userId = this.userIdEdit.getText().toString();
+        Uri.Builder uri = Uri.parse(url).buildUpon();
+
         String campaignId = this.campaignIdEdit.getText().toString();
-        url += "?pi=" + userId + "&campaignId=" + campaignId;
+        uri.appendQueryParameter("campaignId", campaignId);
+
+        String type = (String) this.idType.getSelectedItem();
+        String id = this.idEdit.getText().toString();
+        if (type.equals("Token")) {
+            uri.appendQueryParameter("token", id);
+        } else {
+            uri.appendQueryParameter("pi", id);
+        }
+
+        url = uri.build().toString();
         this.wv.loadUrl(url);
         Snackbar.make(this.wv, url, Snackbar.LENGTH_SHORT).show();
     }
@@ -97,29 +111,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return handleUrl(view, url) || super.shouldOverrideUrlLoading(view, url);
+            return handleUrl(view) || super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override
         public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
-            this.handleUrl(view, url);
+            this.handleUrl(view);
             super.doUpdateVisitedHistory(view, url, isReload);
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            this.handleUrl(view, url);
+            this.handleUrl(view);
             super.onPageFinished(view, url);
         }
 
         @Override
         public void onPageCommitVisible(WebView view, String url) {
-            this.handleUrl(view, url);
+            this.handleUrl(view);
             super.onPageCommitVisible(view, url);
         }
 
-        private boolean handleUrl(WebView view, String url) {
-            url = view.getUrl();
+        private boolean handleUrl(WebView view) {
+            String url = view.getUrl();
             if (url.contains("result")) {
                 Uri uri = Uri.parse(url);
                 String payload = uri.getQueryParameter("payload");

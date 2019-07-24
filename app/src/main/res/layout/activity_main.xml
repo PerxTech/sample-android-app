@@ -32,8 +32,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/idType"
+                    android:entries="@array/idType"/>
+
                 <EditText
-                    android:id="@+id/userId"
+                    android:id="@+id/id"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"

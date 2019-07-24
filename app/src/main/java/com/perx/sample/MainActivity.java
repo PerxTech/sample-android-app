@@ -1,4 +1,4 @@
-package com.example.digisample;
+package com.perx.sample;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

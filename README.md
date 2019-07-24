@@ -8,10 +8,10 @@ Load the game in a webview using the following url
 ```
 For instance:
 ```
-https://microsite-digi-minigames.perxtech.io/games?pi=0004&campaignId=239
+https://microsite-minigames.perxtech.io/games?pi=0004&campaignId=239
 ```
 
-Note, the web app makes use of javascrit and local storage for authentication. So, those 2 should be activated.
+Note, the web app makes use of javascript and local storage for authentication. So, those 2 should be activated.
 
 In android, this is done by doing
 

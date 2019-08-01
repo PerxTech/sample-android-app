@@ -1,16 +1,13 @@
 <resources>
     <string name="app_name">Android Sample</string>
     <string name="ok">OK</string>
-    <string name="default_url">https://microsite-minigames.perxtech.io/games</string>
-    <string name="userId">0004</string>
-    <string name="base_64_encoded">Base 64 encoded</string>
-    <string name="json">Json</string>
-    <string name="url">url</string>
-    <string name="user_id">User Id</string>
-    <string name="campaignId">Campaign Id</string>
-    <string name="campaign">239</string>
-    <string-array name="idType">
-        <item>Token</item>
-        <item>User Id</item>
-    </string-array>
+    <string name="url_label">url</string>
+    <string name="userId_label">User Id</string>
+    <string name="campaignId_label">Campaign Id</string>
+    <string name="token_label">Token</string>
+
+    <string name="default_url">https://microsite-blabla.perxtech.io</string>
+    <string name="default_userId"></string>
+    <string name="default_campaignId"></string>
+    <string name="default_token"></string>
 </resources>

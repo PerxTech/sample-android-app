@@ -7,24 +7,25 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,9 +33,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int REQUEST_PERMISSION_INTERNET = 1;
     WebView wv = null;
     EditText urlEdit = null;
-    EditText idEdit = null;
+
+    EditText userIdEdit = null;
     EditText campaignIdEdit = null;
-    Spinner idType = null;
+    EditText tokenEdit = null;
+
     Button okBtn = null;
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
@@ -53,13 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         webSettings.setDomStorageEnabled(true);
 
         this.wv.setWebChromeClient(new MyChromeWebViewClient());
-        this.wv.setWebViewClient(new MyWebViewClient());
 
         this.urlEdit = this.findViewById(R.id.url);
-        this.idEdit = this.findViewById(R.id.id);
+
+        this.userIdEdit = this.findViewById(R.id.userId);
         this.campaignIdEdit = this.findViewById(R.id.campaignId);
+        this.tokenEdit = this.findViewById(R.id.token);
+
         this.okBtn = this.findViewById(R.id.okBtn);
-        this.idType = this.findViewById(R.id.idType);
 
         this.okBtn.setOnClickListener(this);
     }
@@ -91,61 +95,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String url = this.urlEdit.getText().toString();
         Uri.Builder uri = Uri.parse(url).buildUpon();
 
-        String campaignId = this.campaignIdEdit.getText().toString();
-        uri.appendQueryParameter("campaignId", campaignId);
-
-        String type = (String) this.idType.getSelectedItem();
-        String id = this.idEdit.getText().toString();
-        if (type.equals("Token")) {
-            uri.appendQueryParameter("token", id);
-        } else {
-            uri.appendQueryParameter("pi", id);
+        Map<String, EditText> ps = new HashMap<>();
+        ps.put("campaignId", this.campaignIdEdit);
+        ps.put("token", this.tokenEdit);
+        ps.put("pi", this.userIdEdit);
+        for (Map.Entry<String, EditText> param : ps.entrySet()) {
+            String v = param.getValue().getText().toString();
+            if(!TextUtils.isEmpty(v)) {
+                uri.appendQueryParameter(param.getKey(), v);
+            }
         }
 
         url = uri.build().toString();
         this.wv.loadUrl(url);
         Snackbar.make(this.wv, url, Snackbar.LENGTH_SHORT).show();
-    }
-
-
-    private class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return handleUrl(view) || super.shouldOverrideUrlLoading(view, url);
-        }
-
-        @Override
-        public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
-            this.handleUrl(view);
-            super.doUpdateVisitedHistory(view, url, isReload);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            this.handleUrl(view);
-            super.onPageFinished(view, url);
-        }
-
-        @Override
-        public void onPageCommitVisible(WebView view, String url) {
-            this.handleUrl(view);
-            super.onPageCommitVisible(view, url);
-        }
-
-        private boolean handleUrl(WebView view) {
-            String url = view.getUrl();
-            if (url.contains("result")) {
-                Uri uri = Uri.parse(url);
-                String payload = uri.getQueryParameter("payload");
-                Intent intent = new Intent(MainActivity.this, CongratsActivity.class);
-                intent.putExtra(CongratsActivity.PAYLOAD, payload);
-                MainActivity.this.startActivity(intent);
-
-                return true;
-            }
-
-            return false;
-        }
     }
 
     private class MyChromeWebViewClient extends WebChromeClient {

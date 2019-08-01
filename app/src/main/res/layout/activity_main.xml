@@ -23,7 +23,7 @@
                 android:id="@+id/url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/url"
+                android:hint="@string/url_label"
                 android:inputType="textUri"
                 android:text="@string/default_url" />
 
@@ -32,29 +32,33 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Spinner
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/token"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/idType"
-                    android:entries="@array/idType"/>
+                    android:layout_weight="1"
+                    android:hint="@string/token_label"
+                    android:text="@string/default_token"
+                    android:inputType="text"
+                    android:singleLine="true" />
 
                 <EditText
-                    android:id="@+id/id"
+                    android:id="@+id/userId"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="@string/user_id"
-                    android:inputType="textUri"
-                    android:text="@string/userId" />
+                    android:layout_weight="1"
+                    android:hint="@string/userId_label"
+                    android:inputType="number"
+                    android:text="@string/default_userId" />
 
                 <EditText
                     android:id="@+id/campaignId"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="@string/campaignId"
-                    android:inputType="textUri"
-                    android:text="@string/campaign" />
+                    android:hint="@string/campaignId_label"
+                    android:inputType="number"
+                    android:text="@string/default_campaignId" />
             </LinearLayout>
 
         </LinearLayout>
